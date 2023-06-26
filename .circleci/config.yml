@@ -48,7 +48,7 @@ jobs:
           name: buildImage
           command: |
             ls -la /usr/bin/dockerd &&
-            service docker start &&
+            sudo service docker start &&
             service docker status &&
             docker build --tag=demoImage . &&
             docker ls
