@@ -14,19 +14,9 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  lint: # This is the name of the job, feel free to change it to better match what you're trying to do!
-    # These next lines defines a Docker executors: https://circleci.com/docs/executor-types/
-    # You can specify an image from Dockerhub or use one of the convenience images from CircleCI's Developer Hub
-    # A list of available CircleCI Docker convenience images are available here: https://circleci.com/developer/images/image/cimg/python
-    # The executor is the environment in which the steps below will be executed - below will use a python 3.10.2 container
-    # Change the version below to your required version of python
+  lint:
     docker:
       - image: cimg/python:3.10.2
-    # Checkout the code as the first step. This is a dedicated CircleCI step.
-    # The python orb's install-packages step will install the dependencies from a Pipfile via Pipenv by default.
-    # Here we're making sure we use just use the system-wide pip. By default it uses the project root's requirements.txt.
-    # Then run your tests!
-    # CircleCI will report the results back to your VCS provider.
     steps:
       - checkout
       - python/install-packages:
@@ -37,11 +27,23 @@ jobs:
           name: Run pylint
           # This assumes pytest is installed via the install-package step above
           command: pylint app.py
-  deploy-infrastructure:
+  dockerize:
     docker:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run:
+          name: createVenv
+          command: |
+            make setup
+            #python3 -m venv ~/demoImage &&
+            #source ~/demoImage/bin/activate
+      - run:
+          name: installSoftware
+          command: |
+            make install
+            #pip3 install --upgrade pip &&
+            #pip3 install -r requirements.txt
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
@@ -49,3 +51,7 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - lint
+      - deploy-infrastructure:
+          requires:
+            - lint
+            
