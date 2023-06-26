@@ -47,6 +47,9 @@ jobs:
       - run:
           name: buildImage
           command: |
+            service docker status
+            service docker start
+            service docker status
             docker build --tag=api .
             docker ls
   push2dockerhub:
