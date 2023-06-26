@@ -52,7 +52,7 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  demo 
+  demo:
     # Inside the workeeow, you define the jobs you want to run.
     jobs:
       - lint
