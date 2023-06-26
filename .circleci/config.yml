@@ -49,6 +49,26 @@ jobs:
           command: |
             docker build --tag=api .
             docker ls
+  push2dockerhub:
+    docker:
+      - image: cimg/python:3.10.2
+    steps:
+      - checkout
+      - run:
+          name: CreateDockerpath
+          command: |
+            dockerpath=fr13drich/demo
+      - run:
+          name: Authenticate&tag
+          command: |
+            echo "Docker ID and Image: $dockerpath"
+            docker login
+            docker tag demo fr13drich/demo:v1.0.0
+      - run:
+          name: push
+          command: docker push fr13drich/demo:v1.0.0
+            
+  
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
@@ -59,4 +79,7 @@ workflows:
       - dockerize:
           requires:
             - lint
+      - push2dockerhub:
+          requires:
+            - dockerize
             
