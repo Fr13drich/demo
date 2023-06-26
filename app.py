@@ -8,4 +8,5 @@ app = Flask(__name__)
 def index():
     return "Hello, my name is Fred"
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=80)
+    """run app"""
+    app.run(host="0.0.0.0", port=80)
