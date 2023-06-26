@@ -47,10 +47,11 @@ jobs:
       - run:
           name: buildImage
           command: |
+            ls -la /usr/bin/dockerd 
             service docker status
             service docker start
             service docker status
-            docker build --tag=api .
+            docker build --tag=demoImage .
             docker ls
   push2dockerhub:
     docker:
