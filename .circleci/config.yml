@@ -47,9 +47,9 @@ jobs:
       - run:
           name: buildImage
           command: |
-            ls -la /usr/bin/dockerd &&
-            sudo service docker start &&
-            service docker status &&
+            sudo docker run --privileged
+            sudo service docker start 
+            service docker status 
             docker build --tag=demoImage . &&
             docker ls
   push2dockerhub:
