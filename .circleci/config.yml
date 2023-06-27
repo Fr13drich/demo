@@ -48,7 +48,8 @@ jobs:
           name: buildImage
           command: |
             # sudo docker run --privileged
-            sudo service docker start 
+            sudo cat /etc/init.d/docker
+            # sudo service docker start 
             service docker status
             cat Dockerfile
             docker build --tag=demoImage . &&
