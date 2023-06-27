@@ -47,16 +47,12 @@ jobs:
       - run:
           name: buildImage
           command: |
-            sudo docker run --privileged
+            # sudo docker run --privileged
             sudo service docker start 
-            service docker status 
+            service docker status
+            cat Dockerfile
             docker build --tag=demoImage . &&
             docker ls
-  push2dockerhub:
-    docker:
-      - image: cimg/python:3.10.2
-    steps:
-      - checkout
       - run:
           name: CreateDockerpath
           command: |
@@ -82,7 +78,3 @@ workflows:
       - dockerize:
           requires:
             - lint
-      - push2dockerhub:
-          requires:
-            - dockerize
-            
