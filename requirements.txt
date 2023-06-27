@@ -1,3 +1,4 @@
 flask
 pylint
 docker
+python3.10-venv
