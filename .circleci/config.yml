@@ -29,13 +29,14 @@ jobs:
           command: pylint app.py
   dockerize:
     docker:
-      - image: cimg/base:current # cimg/python:3.10.2
+      - image: cimg/base:current 
+      - image: cimg/python:current
     steps:
       - checkout
       - run:
           name: createVenv
           command: |
-            sudo apt install python3.10
+            # sudo apt install python3.10
             make setup
             #python3 -m venv ~/demoImage &&
             #source ~/demoImage/bin/activate
