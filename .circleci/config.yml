@@ -35,6 +35,7 @@ jobs:
       - run:
           name: createVenv
           command: |
+            apt install python3.10-venv
             make setup
             #python3 -m venv ~/demoImage &&
             #source ~/demoImage/bin/activate
