@@ -32,6 +32,7 @@ jobs:
       - image: cimg/python:3.10.2 
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: createVenv
           command: |
@@ -44,16 +45,16 @@ jobs:
             make install
             #pip3 install --upgrade pip &&
             #pip3 install -r requirements.txt
-      - run:
-          name: startDocker
-          command: |
+#        - run:
+#           name: startDocker
+#           command: |
               # systemctl stop docker
               # cd /var/lib/docker
-              sudo rm -rf /var/lib/docker/*
-              sudo mkdir -p /var/lib/docker/devicemapper/devicemapper
-              sudo dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/data bs=1G count=0 seek=250
+#               sudo rm -rf /var/lib/docker/*
+#               sudo mkdir -p /var/lib/docker/devicemapper/devicemapper
+#               sudo dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/data bs=1G count=0 seek=250
               # systemctl start docker
-              sudo dockerd
+#               sudo dockerd
       - run:
           name: buildImage
           command: |
