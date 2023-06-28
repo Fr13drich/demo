@@ -27,6 +27,9 @@ jobs:
           name: Run pylint
           # This assumes pytest is installed via the install-package step above
           command: pylint app.py
+      - run:
+          name: envvar
+          command: echo ${dockerhubusername}
   dockerize:
     docker:
       - image: cimg/python:3.10.2 
