@@ -67,7 +67,7 @@ jobs:
           name: Authenticate&tag
           command: |
             echo "Docker ID and Image: $dockerpath"
-            # docker login -u fr13drich
+            docker login -u fr13drich -p Frederic=69?
             docker tag demo fr13drich/demo:v1.0.0
       - run:
           name: push
