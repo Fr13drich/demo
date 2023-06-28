@@ -47,16 +47,16 @@ jobs:
       - run:
           name: startDocker
           command: |
-              systemctl stop docker
-              cd /var/lib/docker
-              rm -rf *
-              mkdir -p /var/lib/docker/devicemapper/devicemapper
-              dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/data bs=1G count=0 seek=250
-              systemctl start docker
+              sudo dockerd
+              # systemctl stop docker
+              # cd /var/lib/docker
+              # rm -rf *
+              # mkdir -p /var/lib/docker/devicemapper/devicemapper
+              # dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/data bs=1G count=0 seek=250
+              # systemctl start docker
       - run:
           name: buildImage
           command: |
-              # sudo dockerd
               docker build --tag=demo . 
       - run:
           name: CreateDockerpath
