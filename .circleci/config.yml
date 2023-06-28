@@ -29,13 +29,12 @@ jobs:
           command: pylint app.py
   dockerize:
     docker:
-      - image: cimg/base:current 
+      - image: cimg/python:3.10.2 
     steps:
       - checkout
       - run:
           name: createVenv
           command: |
-            sudo apt install python3.11
             make setup
             #python3 -m venv ~/demoImage &&
             #source ~/demoImage/bin/activate
@@ -47,14 +46,7 @@ jobs:
             #pip3 install -r requirements.txt
       - run:
           name: buildImage
-          command: |
-            # sudo docker run --privileged
-            sudo cat /etc/init.d/docker
-            # sudo service docker start 
-            service docker status
-            cat Dockerfile
-            docker build --tag=demoImage . &&
-            docker ls
+          command: docker build --tag=demoImage . 
       - run:
           name: CreateDockerpath
           command: |

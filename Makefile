@@ -1,5 +1,5 @@
 setup:
-	pip3 install virtualenv
+	# pip3 install virtualenv
 	python3 -m venv ~/demoImage
 	. ~/demoImage/bin/activate
 install:
