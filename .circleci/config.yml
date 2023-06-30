@@ -81,7 +81,7 @@ jobs:
           name: "aws stack"
           command:  |
             aws cloudformation create-stack \
-            --template-file eks.yml \
+            --template-body file://eks.yml \
             --parameters file://eks.json \
             --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
             --stack-name demo \
