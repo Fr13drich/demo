@@ -80,12 +80,12 @@ jobs:
       - run:
           name: "aws stack"
           command:  |
-            aws cloudformation update-stack \
+            aws cloudformation create-stack \
             --template-body file://eks.yml \
             --parameters file://eks.json \
             --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
-            --stack-name demo \
-            # --region us-east-1  
+            --stack-name demo
+            --region us-east-1  
   deploy:
     docker:
       - image: alpine/k8s
