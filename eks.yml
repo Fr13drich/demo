@@ -68,7 +68,6 @@ Resources:
       Type: AWS::EKS::Cluster
       Properties:
         Name: demo
-        Version: "1.20"
         RoleArn: "arn:aws:iam::928015429973:role/eksClusterRole"
         ResourcesVpcConfig:
           SecurityGroupIds:
