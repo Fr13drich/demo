@@ -86,16 +86,21 @@ jobs:
             --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
             --stack-name demo \
             --region us-east-1
+      - run:
+          name: "sleep"
+            sleep 480 # wait 8' for the cluster to be created
           
   deploy:
     docker:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run: 
+          name : "sleep"
+          command: sleep 420
       - run:
           name: "deploy"
           command: |
-            sleep 900 # wait 15' for the cluster to be created
             kubectl get nodes
             kubectl create deploy demo --image=fr13drich/demo:v1.0.0
             kubectl get deploy,rs,svc,pods
