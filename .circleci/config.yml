@@ -92,7 +92,7 @@ jobs:
           
   deploy:
     docker:
-      - image: bitnami/kubectl # amazon/aws-cli
+      - image: d3fk/kubectl # amazon/aws-cli
     steps:
       - checkout
       - run: 
