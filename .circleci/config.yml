@@ -84,7 +84,7 @@ jobs:
             --template-body file://eks.yml \
             --parameters file://eks.json \
             --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
-            --stack-name demo
+            --stack-name demo \
             --region us-east-1  
   deploy:
     docker:
