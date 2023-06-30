@@ -77,8 +77,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints: ["a0:48:fc:b7:54:f4:60:86:37:de:46:40:91:d7:ff:21"]
       - run:
           name: "aws stack"
           command:  |
