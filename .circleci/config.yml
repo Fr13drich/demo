@@ -85,7 +85,7 @@ jobs:
             --parameters file://eks.json \
             --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
             --stack-name demo \
-            --region us-east-1  
+            # --region us-east-1  
   deploy:
     docker:
       - image: alpine/k8s
