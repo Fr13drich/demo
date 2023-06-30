@@ -89,7 +89,7 @@ jobs:
           
   deploy:
     docker:
-      - image: alpine/k8s:1.27
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
