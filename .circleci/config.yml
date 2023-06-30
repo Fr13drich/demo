@@ -86,7 +86,18 @@ jobs:
             --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
             --stack-name demo \
             --region us-east-1  
-  
+  deploy:
+    docker:
+      - image: alpine/k8s
+    steps:
+      - checkout
+      - run:
+          name: "deploy"
+          command: |
+            kubectl get nodes
+            kubectl create deploy demo --image=fr13drich/demo:v1.0.0
+            kubectl get deploy,rs,svc,pods
+            kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 80:80
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
