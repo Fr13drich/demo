@@ -72,15 +72,31 @@ jobs:
       - run:
           name: push
           command: docker push ${dockerhubusername}/demo:v1.0.0
-            
+  createInfra:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: "aws stack"
+          command:  |
+            aws cloudformation deploy \
+            --template-file eks.yml \
+            --parameters file://eks.json \
+            --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
+            --stack-name demo \
+            --region us-east-1  
   
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   demo:
-    # Inside the workeeow, you define the jobs you want to run.
     jobs:
       - lint
       - dockerize:
           requires:
             - lint
+      - createInfra:
+          requires:
+            - dockerize
+            
