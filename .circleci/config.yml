@@ -86,6 +86,7 @@ jobs:
             --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" \
             --stack-name demo \
             --region us-east-1  
+            sleep 900 # wait 15' for the cluster to be created
   deploy:
     docker:
       - image: alpine/k8s
@@ -97,7 +98,8 @@ jobs:
             kubectl get nodes
             kubectl create deploy demo --image=fr13drich/demo:v1.0.0
             kubectl get deploy,rs,svc,pods
-            kubectl port-forward pod/python-helloworld-84857d9565-2598m --address 0.0.0.0 80:80
+            mypod=`kubectl get pods --no-headers=true | cut -f 1 -d " "`
+            kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
@@ -110,4 +112,7 @@ workflows:
       - createInfra:
           requires:
             - dockerize
+      - deploy:
+          requires:
+            - createInfra
             
