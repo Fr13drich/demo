@@ -27,7 +27,7 @@ jobs:
           name: Run pylint
           # This assumes pytest is installed via the install-package step above
           command: pylint app.py
-  buildImage:
+  buildandpush:
     docker:
       - image: cimg/python:3.10.2 
     steps:
@@ -45,26 +45,10 @@ jobs:
             make install
             #pip3 install --upgrade pip &&
             #pip3 install -r requirements.txt
-#        - run:
-#           name: startDocker
-#           command: |
-              # systemctl stop docker
-              # cd /var/lib/docker
-#               sudo rm -rf /var/lib/docker/*
-#               sudo mkdir -p /var/lib/docker/devicemapper/devicemapper
-#               sudo dd if=/dev/zero of=/var/lib/docker/devicemapper/devicemapper/data bs=1G count=0 seek=250
-              # systemctl start docker
-#               sudo dockerd
       - run:
           name: buildImage
           command: |
               docker build --tag=demo . 
-  pushImage:
-    docker:
-      - image: cimg/python:3.10.2 # python:3.7-alpine3.11
-    steps:
-      - checkout
-      - setup_remote_docker
       - run:
           name: Install awscli
           command: |
@@ -127,15 +111,12 @@ workflows:
   demo:
     jobs:
       - lint
-      - buildImage:
+      - buildandpush:
           requires:
             - lint
-      - pushImage:
-          requires:
-            - buildImage
       - createInfra:
           requires:
-            - pushImage
+            - buildandpush
       - deploy:
           requires:
             - createInfra
