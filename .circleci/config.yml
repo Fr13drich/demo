@@ -90,8 +90,8 @@ jobs:
             --region us-east-1
       - run:
           name: "sleep"
-          command: sleep 480: # wait 8' for the cluster to be created
-              timeout: 900
+          command: sleep 840 # wait 8' for the cluster to be created
+          no_output_timeout: 15m
           
   deploy:
     docker:
