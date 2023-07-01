@@ -27,7 +27,7 @@ jobs:
           name: Run pylint
           # This assumes pytest is installed via the install-package step above
           command: pylint app.py
-  dockerize:
+  buildImage:
     docker:
       - image: cimg/python:3.10.2 
     steps:
@@ -59,6 +59,10 @@ jobs:
           name: buildImage
           command: |
               docker build --tag=demo . 
+  pushImage:
+    docker:
+      -image: amazon/aws-cli
+    steps:
       - run:
           name: CreateDockerpath
           command: |
@@ -68,9 +72,10 @@ jobs:
           command: |
             echo "Docker ID and Image: $dockerpath"
             # docker login -u ${dockerhubusername} -p ${dockerhubpassword}
-            aws ecr get-login-password --region region | docker login --username AWS --password-stdin 928015429973d.dkr.ecr.us-east1.amazonaws.com
+            aws ecr get-login-password --region region | docker login --username AWS --password-stdin 928015429973.dkr.ecr.us-east1.amazonaws.com
+            docker images
             # docker tag demo ${dockerhubusername}/demo:v1.0.0
-            docker tag demo public.ecr.aws/z4a6j9j4/demo:v1.0.0
+            docker tag demo 928015429973.dkr.ecr.us-east1.amazonaws.com/demo:v1.0.0
       - run:
           name: push
           command: docker push public.ecr.aws/z4a6j9j4/demo # ${dockerhubusername}/demo:v1.0.0
@@ -114,12 +119,15 @@ workflows:
   demo:
     jobs:
       - lint
-      - dockerize:
+      - buildImage:
           requires:
             - lint
+      - pushImage:
+          requires:
+            - buildImage
       - createInfra:
           requires:
-            - dockerize
+            - pushImage
       - deploy:
           requires:
             - createInfra
