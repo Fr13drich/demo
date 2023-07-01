@@ -67,10 +67,12 @@ jobs:
             # for ECR:
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 928015429973.dkr.ecr.us-east-1.amazonaws.com
             docker images
-            docker tag demo 928015429973.dkr.ecr.us-east-1.amazonaws.com/demo:v1.0.0
+            #docker tag demo 928015429973.dkr.ecr.us-east-1.amazonaws.com/demo:latest
+            docker tag demo:latest public.ecr.aws/z4a6j9j4/demo:latest
       - run:
           name: push
-          command: docker push 928015429973.dkr.ecr.us-east-1/demo # ${dockerhubusername}/demo:v1.0.0
+          command: docker push public.ecr.aws/z4a6j9j4/demo:latest
+                   #docker push 928015429973.dkr.ecr.us-east-1/demo # ${dockerhubusername}/demo:v1.0.0
   createInfra:
     docker:
       - image: amazon/aws-cli
