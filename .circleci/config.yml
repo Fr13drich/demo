@@ -86,7 +86,7 @@ jobs:
             # docker login -u ${dockerhubusername} -p ${dockerhubpassword}
             # docker tag demo ${dockerhubusername}/demo:v1.0.0
             # for ECR:
-            aws ecr get-login-password --region region | docker login --username AWS --password-stdin 928015429973.dkr.ecr.us-east1.amazonaws.com
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 928015429973.dkr.ecr.us-east-1.amazonaws.com
             docker images
             docker tag demo 928015429973.dkr.ecr.us-east1.amazonaws.com/demo:v1.0.0
       - run:
