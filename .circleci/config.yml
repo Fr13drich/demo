@@ -61,10 +61,20 @@ jobs:
               docker build --tag=demo . 
   pushImage:
     docker:
-      - image: amazon/aws-cli
+      - image: cimg/python:3.10.2 
     steps:
       - checkout
       - setup_remote_docker
+      - run:
+          name: Install awscli
+          command: |
+            apk add --no-cache \
+            python3 \
+            py3-pip \
+            && pip3 install --upgrade pip \
+            && pip3 install --no-cache-dir \
+            awscli \
+            && rm -rf /var/cache/apk/*
       - run:
           name: CreateDockerpath
           command: |
@@ -72,11 +82,12 @@ jobs:
       - run:
           name: Authenticate&tag
           command: |
-            echo "Docker ID and Image: $dockerpath"
+            # for dockerhub:
             # docker login -u ${dockerhubusername} -p ${dockerhubpassword}
+            # docker tag demo ${dockerhubusername}/demo:v1.0.0
+            # for ECR:
             aws ecr get-login-password --region region | docker login --username AWS --password-stdin 928015429973.dkr.ecr.us-east1.amazonaws.com
             docker images
-            # docker tag demo ${dockerhubusername}/demo:v1.0.0
             docker tag demo 928015429973.dkr.ecr.us-east1.amazonaws.com/demo:v1.0.0
       - run:
           name: push
