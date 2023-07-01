@@ -63,6 +63,8 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
+      - checkout
+      - setup_remote_docker
       - run:
           name: CreateDockerpath
           command: |
