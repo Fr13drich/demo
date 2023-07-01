@@ -61,7 +61,7 @@ jobs:
               docker build --tag=demo . 
   pushImage:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: - image: cimg/python:3.10.2 # python:3.7-alpine3.11
     steps:
       - checkout
       - setup_remote_docker
