@@ -67,11 +67,13 @@ jobs:
           name: Authenticate&tag
           command: |
             echo "Docker ID and Image: $dockerpath"
-            docker login -u ${dockerhubusername} -p ${dockerhubpassword}
-            docker tag demo ${dockerhubusername}/demo:v1.0.0
+            # docker login -u ${dockerhubusername} -p ${dockerhubpassword}
+            aws ecr get-login-password --region region | docker login --username AWS --password-stdin 928015429973d.dkr.ecr.us-east1.amazonaws.com
+            # docker tag demo ${dockerhubusername}/demo:v1.0.0
+            docker tag demo public.ecr.aws/z4a6j9j4/demo:v1.0.0
       - run:
           name: push
-          command: docker push ${dockerhubusername}/demo:v1.0.0
+          command: docker push public.ecr.aws/z4a6j9j4/demo # ${dockerhubusername}/demo:v1.0.0
   createInfra:
     docker:
       - image: amazon/aws-cli
