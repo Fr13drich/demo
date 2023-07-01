@@ -61,7 +61,7 @@ jobs:
               docker build --tag=demo . 
   pushImage:
     docker:
-      -image: amazon/aws-cli
+      - image: amazon/aws-cli
     steps:
       - run:
           name: CreateDockerpath
