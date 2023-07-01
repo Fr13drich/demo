@@ -92,7 +92,7 @@ jobs:
           
   deploy:
     docker:
-      - image: d3fk/kubectl # amazon/aws-cli
+      - image: cimg/python:3.10.2 # d3fk/kubectl # amazon/aws-cli
     steps:
       - checkout
       - run: 
