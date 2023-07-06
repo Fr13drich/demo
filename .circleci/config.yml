@@ -98,6 +98,7 @@ jobs:
       - image: cimg/python:3.10.2 # d3fk/kubectl # amazon/aws-cli
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: "deploy"
           command: |
