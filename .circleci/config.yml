@@ -114,8 +114,10 @@ jobs:
             # kubectl create deploy demo --image=fr13drich/demo:v1.0.0
             # mypod=`kubectl get pods --no-headers=true | cut -f 1 -d " "`
             # kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
+            echo $KUBECONFIG
+            export KUBECONFIG=/etc/kubernetes/admin.conf or $HOME/.kube/config
             kubectl apply -f deploymentManifest.yml
-            kubectl get deploy,rs,svc,pods
+            # kubectl get deploy,rs,svc,pods
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:

@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
        —name: demo
-          image: fr13drich/demo:v1.0.0
+          image: public.ecr.aws/z4a6j9j4/demo
           ports:
            —containerPort: 80
