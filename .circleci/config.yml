@@ -98,17 +98,15 @@ jobs:
       - image: cimg/python:3.10.2 # d3fk/kubectl # amazon/aws-cli
     steps:
       - checkout
-      - run: 
-          name : "sleep"
-          command: sleep 420
       - run:
           name: "deploy"
           command: |
             kubectl get nodes
-            kubectl create deploy demo --image=fr13drich/demo:v1.0.0
+            # kubectl create deploy demo --image=fr13drich/demo:v1.0.0
+            kubectl create cluster -f deploymentManifest.yml
             kubectl get deploy,rs,svc,pods
-            mypod=`kubectl get pods --no-headers=true | cut -f 1 -d " "`
-            kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
+            # mypod=`kubectl get pods --no-headers=true | cut -f 1 -d " "`
+            # kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
