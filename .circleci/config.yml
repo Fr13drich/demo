@@ -112,10 +112,10 @@ jobs:
           command: |
             # kubectl get nodes
             # kubectl create deploy demo --image=fr13drich/demo:v1.0.0
-            kubectl create cluster -f deploymentManifest.yml
-            kubectl get deploy,rs,svc,pods
             # mypod=`kubectl get pods --no-headers=true | cut -f 1 -d " "`
             # kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
+            kubectl apply -f deploymentManifest.yml
+            kubectl get deploy,rs,svc,pods
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
