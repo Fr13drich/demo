@@ -110,7 +110,7 @@ jobs:
       - run:
           name: "deploy"
           command: |
-            kubectl get nodes
+            # kubectl get nodes
             # kubectl create deploy demo --image=fr13drich/demo:v1.0.0
             kubectl create cluster -f deploymentManifest.yml
             kubectl get deploy,rs,svc,pods

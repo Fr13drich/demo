@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
        —name: demo
-          image: demo
+          image: fr13drich/demo:v1.0.0
           ports:
            —containerPort: 80
