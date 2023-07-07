@@ -102,10 +102,11 @@ jobs:
       - run:
           name: 'install kubectl'
           command: |
-            # curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-            # sudo mv /tmp/eksctl /usr/local/bin
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            sudo mv /tmp/eksctl /usr/local/bin
+            sudo chmod ugo+x /usr/local/bin/eksctl
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            sudo install -o circleci -g circleci -m 0755 kubectl /usr/local/bin/kubectl
             kubectl version --client
       - run:
           name: "deploy"
@@ -114,7 +115,7 @@ jobs:
             # kubectl create deploy demo --image=fr13drich/demo:v1.0.0
             # mypod=`kubectl get pods --no-headers=true | cut -f 1 -d " "`
             # kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
-            kubeadm init # --pod-network-cidr=10.244.0.0/16
+            # kubeadm init # --pod-network-cidr=10.244.0.0/16
             # export KUBECONFIG=$HOME/.kube/config
             kubectl apply -f deploymentManifest.yml
             # kubectl get deploy,rs,svc,pods
