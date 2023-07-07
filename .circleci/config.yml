@@ -114,6 +114,8 @@ jobs:
             # kubectl create deploy demo --image=fr13drich/demo:v1.0.0
             # mypod=`kubectl get pods --no-headers=true | cut -f 1 -d " "`
             # kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
+            ls -laR /home
+            ls -la /etc/kubernetes/admin.conf
             export KUBECONFIG=$HOME/.kube/config
             kubectl apply -f deploymentManifest.yml
             # kubectl get deploy,rs,svc,pods
