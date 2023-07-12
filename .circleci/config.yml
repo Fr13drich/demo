@@ -24,9 +24,12 @@ jobs:
           # app-dir: ~/project/package-directory/  # If your requirements.txt isn't in the root directory.
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
-          name: Run pylint
+          name: lint app
           # This assumes pytest is installed via the install-package step above
           command: pylint app.py
+      - run:
+          name: lint cloudformation
+          command: cfn-lint eks.yml
   buildandpush:
     docker:
       - image: cimg/python:3.10.2 
@@ -102,12 +105,12 @@ jobs:
       - run:
           name: 'install kubectl'
           command: |
-            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-            sudo mv /tmp/eksctl /usr/local/bin
-            sudo chmod ugo+x /usr/local/bin/eksctl
-            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-            sudo install -o circleci -g circleci -m 0755 kubectl /usr/local/bin/kubectl
-            kubectl version --client
+            curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+            sudo install minikube-linux-amd64 /usr/local/bin/minikube
+            minikube start
+            minikube kubectl -- get po -A
+
+            
       - run:
           name: "deploy"
           command: |
@@ -117,7 +120,7 @@ jobs:
             # kubectl port-forward pod/$mypod --address 0.0.0.0 80:80
             # kubeadm init # --pod-network-cidr=10.244.0.0/16
             # export KUBECONFIG=$HOME/.kube/config
-            kubectl apply -f deploymentManifest.yml
+            minikube kubectl apply -f deploymentManifest.yml
             # kubectl get deploy,rs,svc,pods
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
